@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'screens/welcome_screen.dart';
-import 'firebase_options.dart';
+import 'screens/stateless_stateful_demo.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+void main() {
   runApp(const StudentHubApp());
 }
 
@@ -16,12 +10,9 @@ class StudentHubApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'StudentHub',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const WelcomeScreen(),
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: StatelessStatefulDemo(),
     );
   }
 }

@@ -1,80 +1,101 @@
-# StudentHub (HostelHub)
+# StudentHub (HostelHub) - Sprint 2 Demo
 
-A simplified issue reporting and tracking app for college hostels, built with Flutter.
-This project is part of **Kalvium Sprint #2: Introduction to Flutter & Dart**.
-
-## 📂 Folder Structure Explanation
-
-This project follows a clean and scalable folder structure:
-
-- **Example**: `lib/`
-  - **`main.dart`**: The entry point of the application. It sets up the `MaterialApp`, theme, and loads the initial screen.
-  - **`screens/`**: Contains the Visual Interface of the app (pages). Keeping screens separate makes it easier to manage navigation and UI logic as the app grows.
-    - `welcome_screen.dart`: The initial landing page of the app.
-  - **`widgets/`**: Reusable UI components. This promotes code reusability and consistency across different screens.
-    - `action_button.dart`: A custom button widget used in the welcome screen.
-
-**Why this is good for scaling:**
-Separating screens and widgets ensures that as we add more features (like Issue Reporting, Maintenance Request forms), our code remains organized. We can reuse buttons, input fields, and other widgets without duplicating code.
-
-## 🚀 How to Run the Project
-
-1.  **Get Dependencies:**
-    Open your terminal in the project folder and run:
-    ```bash
-    flutter pub get
-    ```
-
-2.  **Run the App:**
-    Ensure an emulator is running or a device is connected, then run:
-    ```bash
-    flutter run
-    ```
-
-## 📱 Welcome UI Explanation
-
-The **Welcome Screen** provides a simple and friendly entry point for users.
-- It uses a `Scaffold` with an `AppBar` titled "StudentHub".
-- A `Column` widget arranges the content vertically:
-  - A friendly "Welcome" text.
-  - A relevant icon (Apartment/Hostel).
-  - A dynamic "Get Started" button.
-- **Interactivity:** The button demonstrates state management. When pressed, it updates its text to "Loading..." and changes color, showcasing how `StatefulWidget` handles user interactions.
-
-## 🧠 Reflection (Sprint Learning)
-
-- **Flutter Widgets:** I learned how to use fundamental widgets like `Scaffold`, `AppBar`, `Column`, `Center`, and `Icon` to build a layout. I also learned about custom widgets to keeping code clean.
-- **Dart State Management:** I understood the difference between `StatelessWidget` and `StatefulWidget`. Using `setState()` allowed me to update the UI dynamically (changing button text/color) when the state changed.
-- **Future Structure:** By organizing code into `screens` and `widgets` now, it will be much easier to integrate Firebase and add complex features like authentication and database streams in future sprints without cluttering a single file.
-
-## 📸 Demo Screenshot
-*(Place your screenshot here)*
+## Overview
+This project demonstrates the core concepts of **Stateless** and **Stateful** widgets in Flutter within the context of the **StudentHub (HostelHub)** application. The goal is to showcase how static UI elements and dynamic interactive features are implemented separately and combined effectively.
 
 ---
 
-## 📝 PR & Video Guidance
+## Widget Explanations
 
-### suggested Commit Message
-`feat: implement welcome screen with state management and folder structure`
+### 1. StatelessWidget
+**What it is:**
+A `StatelessWidget` is a widget that describes part of the user interface which can depend on configuration information in the object itself and the build context, but does not change over time. It is immutable once built.
 
-### Suggested PR Title
-`[Sprint-2] Flutter & Dart Basics – StudentHub`
+**Why it is used for static hostel UI:**
+In the StudentHub app, elements like the **Header**, **Logo**, or **Informational Text** do not need to change after they are rendered. Using a `StatelessWidget` for these parts is efficient because Flutter knows it doesn't need to rebuild them unless the parent changes.
 
-### 🎥 Video Script (1-2 minutes)
+### 2. StatefulWidget
+**What it is:**
+A `StatefulWidget` is a widget that can change its appearance in response to events triggered by user interactions or data updates. It maintains a mutable `State` object that stores the widget's current data.
 
-**Introduction:**
-"Hi, I'm [Your Name]. This is my submission for Kalvium Sprint 2, the StudentHub app."
+**Why it is used for interactive hostel features:**
+Features like **Issue Counters**, **Toggle Switches**, or **Form Inputs** require the UI to update instantly when a user interacts with them. A `StatefulWidget` allows us to use `setState()` to trigger a rebuild of the widget with the new data, making the app dynamic and responsive.
 
-**Folder Structure:**
-"First, looking at the code structure:
-- I have `main.dart` as the entry point.
-- I've separated my UI into a `screens` folder, where I have the `WelcomeScreen`.
-- And a `widgets` folder for reusable components like this `ActionButton`. This structure helps in scaling the app for future features."
+---
 
-**App Demo:**
-"Now running the app:
-- You see the 'StudentHub' AppBar and the Welcome text with a hostel icon.
-- Here is the state management in action: When I click the 'Get Started' button, notice how it changes color to green and the text changes to 'Loading...'. This is done using `setState` in the StatefulWidget."
+## Code Snippets
 
-**Conclusion:**
-"That's the basic setup for StudentHub. Thank you!"
+### Stateless Widget Example (Static Header)
+```dart
+class StaticHostelHeader extends StatelessWidget {
+  const StaticHostelHeader({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const Text('Welcome to StudentHub', style: TextStyle(fontSize: 24)),
+        const Text('Streamlined issue reporting...'),
+      ],
+    );
+  }
+}
+```
+
+### Stateful Widget Example (Interactive Tracker)
+```dart
+class InteractiveIssueTracker extends StatefulWidget {
+  const InteractiveIssueTracker({super.key});
+
+  @override
+  State<InteractiveIssueTracker> createState() => _InteractiveIssueTrackerState();
+}
+
+class _InteractiveIssueTrackerState extends State<InteractiveIssueTracker> {
+  int _issuesReported = 0;
+
+  void _reportIssue() {
+    setState(() {
+      _issuesReported++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text('Issues Reported: $_issuesReported'),
+        ElevatedButton(onPressed: _reportIssue, child: const Text('Report New Issue')),
+      ],
+    );
+  }
+}
+```
+
+---
+
+## Screenshots
+
+| Initial UI | UI After Interaction |
+|------------|----------------------|
+| ![Initial Screen](placeholder_initial.png) | ![Updated Screen](placeholder_interaction.png) |
+
+*(Note: Screenshots to be added after verification)*
+
+---
+
+## Reflection
+
+### How Stateful Widgets Make Flutter Dynamic
+Stateful widgets introduce the concept of "state" — data that can change during the widget's lifetime. By calling `setState()`, we tell the Flutter framework that something has changed, and it efficiently redraws only the affected widget. This mechanism is the backbone of any interactive Flutter app.
+
+### Importance of Separating Static and Dynamic UI
+Separating UI into Stateless and Stateful components improves **performance** and **code maintainability**.
+- **Performance:** Complex static sub-trees (Stateless) don't need to be rebuilt when a small part of the UI (Stateful) changes.
+- **Maintainability:** It makes the code easier to read and test. We can isolate the logic for interaction from the purely visual layout code.
+
+---
+## Submission Details
+- **Sprint:** 2
+- **Topic:** Stateless vs Stateful Widgets
+- **Project:** StudentHub
