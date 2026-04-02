@@ -17,7 +17,7 @@ See `docs/FLUTTER_ARCHITECTURE.md` for a summary of the three core layers:
 ## 2. Widget Tree & Widgets
 See `docs/WIDGETS_GUIDE.md` for details on:
 - Widget tree concept
-- StatelessWidget vs StatefulWidget
+- StatelessWidget vs Statefulwidget
 - Example code for both
 
 ## 3. Dart Basics

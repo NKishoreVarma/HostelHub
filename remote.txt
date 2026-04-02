@@ -1,0 +1,2 @@
+﻿origin	https://github.com/NKishoreVarma/HostelHub.git (fetch)
+origin	https://github.com/NKishoreVarma/HostelHub.git (push)
